@@ -28,4 +28,16 @@ public class Product extends Timestamped{
 
     @Column(nullable = false)
     private int myprice;
+
+    public Product(ProductRequestDto requestdto) {
+        this.title = requestdto.getTitle();
+        this.image = requestdto.getImage();
+        this.link = requestdto.getLink();
+        this.lprice = requestdto.getLprice();
+        this.myprice = 0;
+    }
+
+    public void update(ProductMypriceRequestDto mypridto) {
+        this.myprice = mypridto.getMyprice();
+    }
 }
