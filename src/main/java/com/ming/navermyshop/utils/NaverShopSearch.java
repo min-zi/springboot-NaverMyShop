@@ -1,10 +1,16 @@
 package com.ming.navermyshop.utils;
 
+import com.ming.navermyshop.models.ItemDto;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NaverShopSearch {
-    public String search() {
+    public String search(String query) {
         RestTemplate rest = new RestTemplate();
         // HTTP POST를 요청할때 보내는 데이터(Body)를 설명해주는 헤더(Header)도 만들어서 같이 보내줘야 함
         HttpHeaders headers = new HttpHeaders();
@@ -15,7 +21,7 @@ public class NaverShopSearch {
         // HttpEntity : 요청하기 위해 헤더(Header)와 데이터(Body) 합치기
         HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
         // exchange() : 모든 HTTP 요청 메소드를 지원하며 원하는 서버에 요청시켜주는 메소드
-        ResponseEntity<String> responseEntity = rest.exchange("https://openapi.naver.com/v1/search/shop.json?query=iphone", HttpMethod.GET, requestEntity, String.class);
+        ResponseEntity<String> responseEntity = rest.exchange("https://openapi.naver.com/v1/search/shop.json?query=" + query, HttpMethod.GET, requestEntity, String.class);
         HttpStatus httpStatus = responseEntity.getStatusCode();
         int status = httpStatus.value(); // 요청이 올바르며 원하는 응답이 클라이언트로 전송되었는지 요청 상태 (성공 상태 코드는 200)
         String response = responseEntity.getBody(); // 데이터가 문자열 하나에 쭉 들어옴
@@ -24,9 +30,17 @@ public class NaverShopSearch {
 
         return response;
     }
+    public List<ItemDto> formJSONItems(String result) {
+        JSONObject rjson = new JSONObject(result); // 검색한 결과를 문자열로 변경해줌
+        JSONArray items = rjson.getJSONArray("items"); // 데이터에서 요소 추출하기
 
-    public static void main(String[] args) {
-        NaverShopSearch naverShopSearch = new NaverShopSearch();
-        naverShopSearch.search();
+        List<ItemDto> itemList = new ArrayList<>();
+
+        for (int i=0; i<items.length(); i++) {
+            JSONObject itemJson = items.getJSONObject(i);
+            ItemDto itemDto = new ItemDto(itemJson);
+            itemList.add(itemDto);
+        }
+        return itemList;
     }
 }

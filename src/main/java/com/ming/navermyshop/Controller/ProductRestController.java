@@ -17,7 +17,7 @@ public class ProductRestController {
 
     private final ProductRepository productRepository;
 
-    // 등록된 전체 상품 목록 조회
+    // 네이버 API 이용해서 등록된 전체 상품 목록 조회
     @GetMapping("/api/products")
     public List<Product> read() {
         return productRepository.findAll();
