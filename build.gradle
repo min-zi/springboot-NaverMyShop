@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.json/json 에서 가져옴
+    // JSON을 다루기 위해 https://mvnrepository.com/artifact/org.json/json 에서 가져옴
     implementation group: 'org.json', name: 'json', version: '20160810'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'

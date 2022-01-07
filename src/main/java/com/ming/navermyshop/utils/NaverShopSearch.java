@@ -4,11 +4,13 @@ import com.ming.navermyshop.models.ItemDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component // 스프링이 자동으로 필요한 클래스를 필요한 곳에 생성할 수 있도록 컴포넌트 등록해줌
 public class NaverShopSearch {
     public String search(String query) {
         RestTemplate rest = new RestTemplate();
@@ -30,17 +32,22 @@ public class NaverShopSearch {
 
         return response;
     }
-    public List<ItemDto> formJSONItems(String result) {
-        JSONObject rjson = new JSONObject(result); // 검색한 결과를 문자열로 변경해줌
-        JSONArray items = rjson.getJSONArray("items"); // 데이터에서 요소 추출하기
+
+
+    public List<ItemDto> fromJSONtoItems(String result) {
+        JSONObject rjson = new JSONObject(result); // 검색한 결과의 문자열을 JSONObject로 변경해줌
+        //System.out.println(rjson);
+        JSONArray items = rjson.getJSONArray("items"); // 배열 형태(대괄호)로 들어있는 키 값이 items인 요소 추출하기
 
         List<ItemDto> itemList = new ArrayList<>();
 
         for (int i=0; i<items.length(); i++) {
-            JSONObject itemJson = items.getJSONObject(i);
+            JSONObject itemJson = items.getJSONObject(i); // JSONArray는 JSONObject로 이루어진 배열이라서 JSONObject로 꺼내옴
+            //System.out.println(itemJson); // 검색한 아이템들이 하나하나 출력됨
             ItemDto itemDto = new ItemDto(itemJson);
             itemList.add(itemDto);
         }
         return itemList;
     }
+
 }
