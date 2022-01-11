@@ -1,13 +1,12 @@
 package com.ming.navermyshop.Controller;
 
 import com.ming.navermyshop.models.Product;
+import com.ming.navermyshop.models.ProductMypriceRequestDto;
 import com.ming.navermyshop.models.ProductRepository;
 import com.ming.navermyshop.models.ProductRequestDto;
+import com.ming.navermyshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +15,7 @@ import java.util.List;
 public class ProductRestController {
 
     private final ProductRepository productRepository;
+    private final ProductService productService;
 
     // 네이버 API 이용해서 등록된 전체 상품 목록 조회
     @GetMapping("/api/products")
@@ -23,10 +23,16 @@ public class ProductRestController {
         return productRepository.findAll();
     }
 
-    // 관심상품 등록
+    // 찜한 상품 등록
     @PostMapping("/api/products")
     public Product create(@RequestBody ProductRequestDto requestDto) {
         Product product = new Product(requestDto);
         return productRepository.save(product);
+    }
+
+    // 설정 가격 변경
+    @PutMapping("/api/products/{id}")
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto) {
+        return productService.update(id, requestDto);
     }
 }
