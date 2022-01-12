@@ -2,13 +2,14 @@ package com.ming.navermyshop.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 
 import javax.persistence.*;
 
 @NoArgsConstructor // 기본생성자를 만들어줌
 @Getter // get 함수를 일괄적으로 자동 생성
 @Entity // DB 테이블 역할을 한다고 스프링에게 알려줌
-public class Product extends Timestamped{
+public class Product extends Timestamped {
 
     @GeneratedValue(strategy = GenerationType.AUTO) // ID가 자동 생성, 자동 증가 함
     @Id
@@ -37,7 +38,13 @@ public class Product extends Timestamped{
         this.myprice = 0;
     }
 
-    public void update(ProductMypriceRequestDto mypridto) {
-        this.myprice = mypridto.getMyprice();
+    public void update(ProductMypriceRequestDto requestdto) {
+        this.myprice = requestdto.getMyprice();
     }
+
+    // 스케줄러 lprice Dto
+    public void updateByItemDto(ItemDto itemDto) {
+        this.lprice = itemDto.getLprice();
+    }
+
 }
