@@ -10,3 +10,5 @@
 
 ### 도메인으로 접속한 화면
 ![내도메인](https://user-images.githubusercontent.com/51107988/151000422-6d6f56bd-8e32-4f77-a3a0-1fc597d52ed1.JPG)
+### 카카오톡 OG 태그 링크 공유 화면
+![og태그](https://user-images.githubusercontent.com/51107988/151001583-0eb182e1-2d6d-4e0f-adf6-96a99acde427.jpg)
