@@ -7,3 +7,6 @@
 |POST|/api/products|찜 상품 등록하기|
 |GET|/api/products|찜 상품 조회하기|
 |PUT|/api/products/{id}|찜 할 상품에 원하는 가격을 설정하고 그 가격보다 낮을 경우에 표시해주기|
+
+### 도메인으로 접속한 화면
+![내도메인](https://user-images.githubusercontent.com/51107988/151000422-6d6f56bd-8e32-4f77-a3a0-1fc597d52ed1.JPG)
